@@ -619,7 +619,7 @@ $( document ).on( "click", ".remove_this_img", function(event) {
             .wpforms-submit-container {
                 display: none;
             }
-            /*.hcf_box{
+            .hcf_box{
                 display: grid;
                 grid-template-columns: max-content 1fr;
                 grid-row-gap: 10px;
@@ -627,33 +627,11 @@ $( document ).on( "click", ".remove_this_img", function(event) {
             }
             .hcf_field{
                 display: contents;
-            }*/
-            .hcf_field {
-                display: grid;
-                width: 100%;
-                font-size: 14px;
-            }
-            .hcf_field label {
-                display: block;
-                margin-bottom: 5px;
-                line-height: 1.2;
-            }
-            .hcf_box h2 {
-                padding-left: 0 !important;
-                font-weight: bold !important;
-                font-size: 16px !important;
             }
             p.hcf_box{
                 font-size: 13px !important;
                 line-height: 3.5 !important;
                 margin: 1em 0 !important;
-            }
-            .hcf_box textarea {
-                min-height: 140px;
-            }
-            .hcf_field input {
-                font-size: 15px;
-                line-height: 1.4;
             }
 
 .image p.old_img,
@@ -756,24 +734,15 @@ $( document ).on( "click", ".remove_this_img", function(event) {
         }elseif($field->type=="checkbox"){
            echo '<h2>'.$field->label.'</h2></p>';
             $content_radios = $field->choices;
-               //var_dump( $post_meta_data );
                foreach($content_radios as  $content_radio){
-                    $checked = '';
-                    if(is_array($post_meta_data)){
-                        if( in_array( $content_radio->label, $post_meta_data ) ){ $checked ='checked';}
-                    }else{
-                        if( strpos($post_meta_data, $content_radio->label) || $content_radio->label == $post_meta_data ){ $checked ='checked';}
-                    }
+                    if($content_radio->label==$post_meta_data){ $checked ='checked';}
                     echo '<p class="meta-options hcf_field"><label>'.$content_radio->label.'</label>';
-                    //echo "<input type ='checkbox' name='wpforms_fields_".$field->id."[]' value='".$content_radio->label."' $checked></p>";
-                    echo "<input type ='checkbox' name='".str_replace(")","",str_replace("(","",str_replace(" ","_",strtolower($field->label."_".$field->id))))."[]' value='".$content_radio->label."' $checked></p>";
+                    echo "<input type ='checkbox' name='wpforms_fields_".$field->id."[]' value='".$content_radio->label."' $checked></p>";
                }
         }else{
-            if($field->type != 'html'){
-               echo '<p class="meta-options hcf_field">
-                <label>'.$field->label.'</label>';
-               echo "<input type =".$field->type." name='".str_replace(")","",str_replace("(","",str_replace(" ","_",strtolower($field->label."_".$field->id))))."' value='".$post_meta_data."'></p>";
-           }
+           echo '<p class="meta-options hcf_field">
+            <label>'.$field->label.'</label>';
+           echo "<input type =".$field->type." name='".str_replace(")","",str_replace("(","",str_replace(" ","_",strtolower($field->label."_".$field->id))))."' value='".$post_meta_data."'></p>";
         }
     }
     ?>
